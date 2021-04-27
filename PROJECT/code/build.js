@@ -66,7 +66,7 @@ function customShape() {
     var shapeGeometry = new THREE.BoxGeometry(1, 1, 1);
     shape = new THREE.Mesh(shapeGeometry, shapeMaterial);
     shape.position.set(0, 2, 0);
-    shape.geometry.vertices[i].y -= 1;
+    //shape.geometry.vertices[i].y -= 1;
 }
 
 //Add all shapes to the scene
