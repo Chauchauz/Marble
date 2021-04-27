@@ -2,6 +2,8 @@ setScene();
 addLight();
 createFloor();
 createMarble();
+groupWalls();
+customShape();
 addShapes();
 document.addEventListener( 'keydown', onKeyDown, false );
 document.addEventListener( 'keyup', onKeyUp, false );
