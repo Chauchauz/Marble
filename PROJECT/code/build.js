@@ -7,6 +7,7 @@ var ambientlight;
 var cameralight;
 var floor = null;
 var marble = null;
+var cube = null;
 
 //Define a function that loads any PLY model 
 function loadModel(model) {
@@ -41,10 +42,24 @@ function createMarble() {
     marble.position.y = 0.5;
 }
 
+//Create Cube 
+
+function createCube()
+{
+    var cubeMaterial = new THREE.MeshPhongMaterial();
+    cubeMaterial.color = new THREE.Color(0xFF00FF);
+    cubeMaterial.wireframe = false;
+    var cubeGeometry = new THREE.BoxGeometry(1,1,1);
+    cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+    cube.position.y = 10;
+}
+
 //Add all shapes to the scene
 function addShapes() {
     scene.add(floor);
     scene.add(marble);
     scene.add(camera);
     scene.add(ambientlight);
+    scene.add(cube);
 }
+
