@@ -53,20 +53,21 @@ function createWall(x, y, z) {
 
 //Group Walls
 function groupWalls() {
-    for (i = 0; i < floor.geometry.boundingBox.getSize().x; i++) {
-        walls[i] = createWall(4.5 - i, 0.5, -5);
-        walls[i].rotation.y = Math.PI / 2;
-    }
-}
+    // for (i = 0; i < floor.geometry.boundingBox.getSize().x; i++) {
+    //     walls[i] = createWall(4.5 - i, 0.5, -5);
+    //     walls[i].rotation.y = Math.PI / 2;
+    // }
 
-function customShape() {
-    var shapeMaterial = new THREE.MeshPhongMaterial();
-    shapeMaterial.color = new THREE.Color(0xFF00FF);
-    shapeMaterial.wireframe = false;
-    var shapeGeometry = new THREE.BoxGeometry(1, 1, 1);
-    shape = new THREE.Mesh(shapeGeometry, shapeMaterial);
-    shape.position.set(0, 2, 0);
-    //shape.geometry.vertices[i].y -= 1;
+    const x = floor.geometry.boundingBox.getSize().x
+    const y = floor.geometry.boundingBox.getSize().y * 2 + 1
+
+    for (i = 0; i < x; i++) {
+        walls[i] = new Array(y)
+        for (j = 0; j < walls[i].length; j++) {
+            walls[i][j] = createWall((j % 2 == 0) ? 4.5 - i : 4 - i, 0.5, -5 + j / 2);
+            walls[i][j].rotation.y = (j % 2 == 0) ? Math.PI / 2 : Math.PI;
+        }
+    }
 }
 
 //Add all shapes to the scene
@@ -74,9 +75,10 @@ function addShapes() {
     scene.add(floor);
     scene.add(marble);
     for (i = 0; i < walls.length; i++) {
-        scene.add(walls[i]);
+        for (j = 0; j < walls[i].length; j++) {
+            scene.add(walls[i][j]);
+        }
     }
-    scene.add(shape);
     scene.add(camera);
     scene.add(ambientlight);
 }
