@@ -105,16 +105,16 @@ function collision() {
     var backIntersects = backRay.intersectObjects(scene.children);
 
     if (rightIntersects.length > 0) {
-        rightCollision = (marble.position.distanceTo(rightIntersects[0].object.position) < 0.7) ? true : false;
+        rightCollision = (rightIntersects[0].object.position.x - marble.position.x < 0.5) ? true : false;
     }
     if (leftIntersects.length > 0) {
-        leftCollision = (marble.position.distanceTo(leftIntersects[0].object.position) < 0.7) ? true : false;
+        leftCollision = (marble.position.x - leftIntersects[0].object.position.x < 0.5) ? true : false;
     }
     if (forwardIntersects.length > 0) {
-        forwardCollision = (marble.position.distanceTo(forwardIntersects[0].object.position) < 0.7) ? true : false;
+        forwardCollision = (marble.position.z - forwardIntersects[0].object.position.z < 0.5) ? true : false;
     }
     if (backIntersects.length > 0) {
-        backCollision = (marble.position.distanceTo(backIntersects[0].object.position) < 0.7) ? true : false;
+        backCollision = (backIntersects[0].object.position.z - marble.position.z < 0.5) ? true : false;
     }
     
     requestAnimationFrame(collision);
