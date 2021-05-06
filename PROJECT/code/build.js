@@ -53,20 +53,26 @@ function createWall(x, y, z) {
 
 //Group Walls
 function groupWalls() {
-    // for (i = 0; i < floor.geometry.boundingBox.getSize().x; i++) {
-    //     walls[i] = createWall(4.5 - i, 0.5, -5);
-    //     walls[i].rotation.y = Math.PI / 2;
+    const x = floor.geometry.boundingBox.getSize().x;
+    const y = floor.geometry.boundingBox.getSize().y * 2 + 1;
+
+    //GRID of walls
+    // for (i = 0; i < x; i++) {
+    //     walls[i] = new Array(y);
+    //     for (j = 0; j < walls[i].length; j++) {
+    //         walls[i][j] = createWall((j % 2 == 0) ? -4.5 + i : -5 + i, 0.5, 5 - j / 2);
+    //         walls[i][j].rotation.y = (j % 2 == 0) ? Math.PI / 2 : Math.PI;
+    //     }
     // }
 
-    const x = floor.geometry.boundingBox.getSize().x
-    const y = floor.geometry.boundingBox.getSize().y * 2 + 1
-
+    //OUTER BOX of walls
     for (i = 0; i < x; i++) {
-        walls[i] = new Array(y)
-        for (j = 0; j < walls[i].length; j++) {
-            walls[i][j] = createWall((j % 2 == 0) ? 4.5 - i : 4 - i, 0.5, -5 + j / 2);
-            walls[i][j].rotation.y = (j % 2 == 0) ? Math.PI / 2 : Math.PI;
-        }
+        walls[i] = createWall(-4.5 + i, 0.5, -5); //Top Wall
+        walls[i].rotation.y =  Math.PI / 2;
+        walls[i + x] = createWall(-5, 0.5, -4.5 + i); //Left Wall
+        walls[i + 2 * x] = createWall(5, 0.5, -4.5 + i); //Right Wall
+        walls[i + 3 * x] = createWall(-4.5 + i, 0.5, 5);
+        walls[i + 3 * x].rotation.y =  Math.PI / 2; //Bottom Wall
     }
 }
 
@@ -74,11 +80,17 @@ function groupWalls() {
 function addShapes() {
     scene.add(floor);
     scene.add(marble);
+
+    // for (i = 0; i < walls.length; i++) {
+    //     for (j = 0; j < walls[i].length; j++) {
+    //         scene.add(walls[i][j]);
+    //     }
+    // }
+
     for (i = 0; i < walls.length; i++) {
-        for (j = 0; j < walls[i].length; j++) {
-            scene.add(walls[i][j]);
-        }
+        scene.add(walls[i]);
     }
+
     scene.add(camera);
     scene.add(ambientlight);
 }

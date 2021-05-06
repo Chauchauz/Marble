@@ -5,13 +5,23 @@ var tiltRight = false;
 
 var controlMode = "marble"; //Control either the FLOOR or MARBLE
 const floorSpeed = 0.01;
-var marbleXVel = 0.1;
-var marbleZVel = 0.1;
+var marbleXVel = 0;
+var marbleZVel = 0;
+const acceleration = 0.005;
 
-var red = 1;
+var rightRay = new THREE.Raycaster();
+var rightCollision = false;
+var leftRay = new THREE.Raycaster();
+var leftCollision = false;
+var forwardRay = new THREE.Raycaster();
+var forwardCollision = false;
+var backRay = new THREE.Raycaster();
+var backCollision = false;
+
+var rainbow = true;
+var red = 0;
 var green = 0;
 var blue = 0;
-
 var colorState = 1; //Red = 1, Yellow = 2, Green = 3, Cyan = 4, Blue = 5, Magenta = 6
 const colorSpeed = 0.025;
 
@@ -19,77 +29,134 @@ function animate() {
     renderer.render(scene, camera);
     controls.update();
     requestAnimationFrame(animate);
-
-    if (controlMode == "floor") {
-        if (tiltForward && floor.rotation.x > 2 * Math.PI / 5) {
-            floor.rotation.x -= floorSpeed;
-        }
-        if (tiltLeft && floor.rotation.y < Math.PI / 10) {
-            floor.rotation.y += floorSpeed;
-        }
-        if (tiltBackward && floor.rotation.x < 3 * Math.PI / 5) {
-            floor.rotation.x += floorSpeed;
-        }
-        if (tiltRight && floor.rotation.y > -1 * Math.PI / 10) {
-            floor.rotation.y -= floorSpeed;
-        }
-    }
-    else if (controlMode == "marble") {
-        if (tiltForward && marble.position.z >= -4.5) {
-            marble.position.z -= marbleZVel;
-        }
-        if (tiltLeft && marble.position.x >= -4.5) {
-            marble.position.x -= marbleXVel;
-        }
-        if (tiltBackward && marble.position.z <= 4.5) {
-            marble.position.z += marbleZVel;
-        }
-        if (tiltRight && marble.position.x <= 4.5) {
-            marble.position.x += marbleXVel;
-        }
-    }
 }
 
-function rainbow() {
-    if (colorState == 1) {
-        green += colorSpeed;
-        if (green >= 1) {
-            colorState = 2;
+function movement() {
+    // if (controlMode == "floor") {
+    //     if (tiltForward && floor.rotation.x > 2 * Math.PI / 5) {
+    //         floor.rotation.x -= floorSpeed;
+    //     }
+    //     if (tiltLeft && floor.rotation.y < Math.PI / 10) {
+    //         floor.rotation.y += floorSpeed;
+    //     }
+    //     if (tiltBackward && floor.rotation.x < 3 * Math.PI / 5) {
+    //         floor.rotation.x += floorSpeed;
+    //     }
+    //     if (tiltRight && floor.rotation.y > -1 * Math.PI / 10) {
+    //         floor.rotation.y -= floorSpeed;
+    //     }
+    // }
+    
+    if (controlMode == "marble") {
+        //ACCELERATION
+        if (tiltForward && marbleZVel > -0.1) { //-Z
+            marbleZVel -= acceleration;
+        }
+        if (tiltLeft && marbleXVel > -0.1) { //-X
+            marbleXVel -= acceleration;
+        }
+        if (tiltBackward && marbleZVel < 0.1) { //+Z
+            marbleZVel += acceleration;
+        }
+        if (tiltRight && marbleXVel < 0.1) { //+X
+            marbleXVel += acceleration;
+        }
+
+        //DECELERATION
+        if (!tiltForward && !tiltBackward) {
+            marbleZVel -= (marbleZVel > 0) ? acceleration / 2 : -acceleration / 2;
+
+            if (marbleZVel != 0 && Math.abs(marbleZVel) <= acceleration) {
+                marbleZVel = 0;
+            }
+        }
+        if (!tiltLeft && !tiltRight) {
+            marbleXVel -= (marbleXVel > 0) ? acceleration / 2 : -acceleration / 2;
+
+            if (marbleXVel != 0 && Math.abs(marbleXVel) <= acceleration) {
+                marbleXVel = 0;
+            }
         }
     }
-    else if (colorState == 2) {
-        red -= colorSpeed;
-        if (red <= 0) {
-            colorState = 3;
-        }
+
+    if ((marbleXVel > 0 && !rightCollision) || (marbleXVel < 0 && !leftCollision)) {
+        marble.position.x += marbleXVel;
     }
-    else if (colorState == 3) {
-        blue += colorSpeed;
-        if (blue >= 1) {
-            colorState = 4;
-        }
+    if ((marbleZVel > 0 && !backCollision) || (marbleZVel < 0 && !forwardCollision)) {
+        marble.position.z += marbleZVel;
     }
-    else if (colorState == 4) {
-        green -= colorSpeed;
-        if (green <= 0) {
-            colorState = 5;
-        }
+
+    requestAnimationFrame(movement);
+}
+
+function collision() {
+    rightRay.set(marble.position, new THREE.Vector3(1, 0, 0).normalize());
+    var rightIntersects = rightRay.intersectObjects(scene.children);
+    leftRay.set(marble.position, new THREE.Vector3(-1, 0, 0).normalize());
+    var leftIntersects = leftRay.intersectObjects(scene.children);
+    forwardRay.set(marble.position, new THREE.Vector3(0, 0, -1).normalize());
+    var forwardIntersects = forwardRay.intersectObjects(scene.children);
+    backRay.set(marble.position, new THREE.Vector3(0, 0, 1).normalize());
+    var backIntersects = backRay.intersectObjects(scene.children);
+
+    if (rightIntersects.length > 0) {
+        rightCollision = (marble.position.distanceTo(rightIntersects[0].object.position) < 0.7) ? true : false;
     }
-    else if (colorState == 5) {
-        red += colorSpeed;
-        if (red >= 1) {
-            colorState = 6;
-        }
+    if (leftIntersects.length > 0) {
+        leftCollision = (marble.position.distanceTo(leftIntersects[0].object.position) < 0.7) ? true : false;
     }
-    else if (colorState == 6) {
-        blue -= colorSpeed;
-        if (blue <= 0) {
-            colorState = 1;
+    if (forwardIntersects.length > 0) {
+        forwardCollision = (marble.position.distanceTo(forwardIntersects[0].object.position) < 0.7) ? true : false;
+    }
+    if (backIntersects.length > 0) {
+        backCollision = (marble.position.distanceTo(backIntersects[0].object.position) < 0.7) ? true : false;
+    }
+    
+    requestAnimationFrame(collision);
+}
+
+function rainbowMarble() {
+    if (rainbow) {
+        if (colorState == 1) {
+            green += colorSpeed;
+            if (green >= 1) {
+                colorState = 2;
+            }
+        }
+        else if (colorState == 2) {
+            red -= colorSpeed;
+            if (red <= 0) {
+                colorState = 3;
+            }
+        }
+        else if (colorState == 3) {
+            blue += colorSpeed;
+            if (blue >= 1) {
+                colorState = 4;
+            }
+        }
+        else if (colorState == 4) {
+            green -= colorSpeed;
+            if (green <= 0) {
+                colorState = 5;
+            }
+        }
+        else if (colorState == 5) {
+            red += colorSpeed;
+            if (red >= 1) {
+                colorState = 6;
+            }
+        }
+        else if (colorState == 6) {
+            blue -= colorSpeed;
+            if (blue <= 0) {
+                colorState = 1;
+            }
         }
     }
 
     marble.material.color = new THREE.Color(red, green, blue);
-    requestAnimationFrame(rainbow);
+    requestAnimationFrame(rainbowMarble);
 }
 
 var onKeyUp = function ( event ) {
