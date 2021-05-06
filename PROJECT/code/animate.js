@@ -1,14 +1,17 @@
+//INPUT DETECTION
 var tiltForward = false;
 var tiltLeft = false;
 var tiltBackward = false;
 var tiltRight = false;
 
+//MARBLE MOVEMENT
 var controlMode = "marble"; //Control either the FLOOR or MARBLE
 const floorSpeed = 0.01;
 var marbleXVel = 0;
 var marbleZVel = 0;
 const acceleration = 0.005;
 
+//COLLISION FUNCTION
 var rightRay = new THREE.Raycaster();
 var rightCollision = false;
 var leftRay = new THREE.Raycaster();
@@ -18,6 +21,7 @@ var forwardCollision = false;
 var backRay = new THREE.Raycaster();
 var backCollision = false;
 
+//RAINBOW FUNCTION
 var rainbow = true;
 var red = 0;
 var green = 0;
@@ -79,12 +83,13 @@ function movement() {
         }
     }
 
-    if ((marbleXVel > 0 && !rightCollision) || (marbleXVel < 0 && !leftCollision)) {
-        marble.position.x += marbleXVel;
-    }
-    if ((marbleZVel > 0 && !backCollision) || (marbleZVel < 0 && !forwardCollision)) {
-        marble.position.z += marbleZVel;
-    }
+    //Bounce off walls
+    marbleXVel = ((rightCollision || leftCollision) && Math.abs(marbleXVel) > 0.01) ? -marbleXVel / 2 : marbleXVel;
+    marbleZVel = ((forwardCollision || backCollision) && Math.abs(marbleZVel) > 0.01) ? -marbleZVel / 2 : marbleZVel;
+
+    //Move marble by velocity
+    marble.position.x += ((marbleXVel > 0 && !rightCollision) || (marbleXVel < 0 && !leftCollision)) ? marbleXVel : 0;
+    marble.position.z += ((marbleZVel > 0 && !backCollision) || (marbleZVel < 0 && !forwardCollision)) ? marbleZVel : 0;
 
     requestAnimationFrame(movement);
 }
