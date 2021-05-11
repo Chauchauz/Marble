@@ -45,7 +45,7 @@ function createWall(x, y, z) {
     var wallMaterial = new THREE.MeshPhongMaterial();
     wallMaterial.color = new THREE.Color(0x00AAFF);
     wallMaterial.wireframe = false;
-    var wallGeometry = new THREE.BoxGeometry(0.1, 1, 1);
+    var wallGeometry = new THREE.BoxGeometry(0.1, 2, 1);
     wall = new THREE.Mesh(wallGeometry, wallMaterial);
     wall.position.set(x, y, z);
     return wall;
@@ -112,8 +112,8 @@ function createShapes(){
                 var tra = new THREE.Matrix4();
                 var combined = new THREE.Matrix4();
                 
-                sca.makeScale(1, 1, 1);
-                tra.makeTranslation(((i)-5.5), 0.5, ((j)-5.5));
+                sca.makeScale(1, 1 , 1);
+                tra.makeTranslation(((i)-5.5), 0.6, ((j)-5.5));
                 combined.multiply(tra);
                 combined.multiply(sca);
 
