@@ -38,6 +38,7 @@ function createMarble() {
     var marbleGeometry = new THREE.SphereGeometry(0.5, 20, 20);
     marble = new THREE.Mesh(marbleGeometry, marbleMaterial);
     marble.position.y = 0.5;
+    marble.position.x = 9;
 }
 
 //Create Wall
