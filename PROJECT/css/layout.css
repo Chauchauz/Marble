@@ -7,21 +7,28 @@ body {
     font-family: Monospace;
     margin: 0px;
     overflow: hidden;
+    background: #00071C;
 }
 
 #info {
     position: absolute;
     top: 10px;
     width: 100%;
-    text-align: center;
+    text-align: right;
+    color: blue;
 }
 
-h1 {
-    text-align: center;
-    color: cornsilk;
-    font-size: 300%;
-    background-color: #23445D;
-    width: 100%;
-    padding: 10px 5px;
-    margin-top: auto;
+a#menubtn {
+    /* border: 2px solid red; */
+    color:white;
+    background-color: #2a2a2a;
+    padding: 10px;
+    margin-right: 100px;
+    margin-top: 500px;
+    text-decoration: none;
+    transition: .3s ease-out;
+}
+a#menubtn:hover {
+    transition: .3s;
+    background-color:#52E19F;
 }
