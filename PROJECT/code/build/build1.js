@@ -67,13 +67,9 @@ function createMarble() {
     marbleMaterial.wireframe = false;
     var marbleGeometry = new THREE.SphereGeometry(0.5, 20, 20);
     marble = new THREE.Mesh(marbleGeometry, marbleMaterial);
-<<<<<<< Updated upstream:PROJECT/code/build.js
-    marble.position.y = 0.5;
-=======
     //marble.position.set(0, 0.5, 0);
     marble.position.set(4.5, 0.5, -4.5);
     marble.castShadow = true;
->>>>>>> Stashed changes:PROJECT/code/build/build1.js
 }
 
 //Create Wall
