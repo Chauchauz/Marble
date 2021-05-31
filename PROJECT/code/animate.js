@@ -29,6 +29,9 @@ var blue = 0;
 var colorState = 1; //Red = 1, Yellow = 2, Green = 3, Cyan = 4, Blue = 5, Magenta = 6
 const colorSpeed = 0.025;
 
+//GUI
+var gui;
+
 function animate() {
     renderer.render(scene, camera);
     controls.update();
@@ -158,10 +161,13 @@ function rainbowMarble() {
                 colorState = 1;
             }
         }
+
+        marble.material.color = new THREE.Color(red, green, blue);
+        requestAnimationFrame(rainbowMarble);
     }
 
-    marble.material.color = new THREE.Color(red, green, blue);
-    requestAnimationFrame(rainbowMarble);
+    // marble.material.color = new THREE.Color(red, green, blue);
+    // requestAnimationFrame(rainbowMarble);
 }
 
 var onKeyUp = function ( event ) {
@@ -216,4 +222,55 @@ var onKeyDown = function ( event ) {
         break;
 
     }
+
+}
+
+function buildGui() {
+    gui = new dat.GUI();
+
+    var spotLightFolder = gui.addFolder('Spotlight');
+    var spotLightParams = {
+        color: spotlight.color.getHex(),
+        intensity: spotlight.intensity
+    }
+
+    spotLightFolder.addColor(spotLightParams, 'color').onChange(function(val) {
+        spotlight.color.setHex(val);
+    })
+    spotLightFolder.add(spotLightParams, 'intensity', 0, 1).step(0.1).onChange(function(val) {
+        spotlight.intensity = val;
+    })
+
+    var ballFolder = gui.addFolder('Marble');
+    var ballParams = {
+        rainbow_color: rainbow,
+        color: marble.material.color.getHex()
+    }
+
+    ballFolder.add(ballParams, 'rainbow_color').listen().onChange(function(val) {
+        rainbow = val;
+
+        if (val) {
+            requestAnimationFrame(rainbowMarble);
+        }
+    })
+    ballFolder.addColor(ballParams, 'color').onChange(function(val) {
+        rainbow = false;
+        ballParams.rainbow_color = false;
+        cancelAnimationFrame(rainbowMarble);
+        marble.material.color.setHex(val);
+    })
+    
+
+
+
+    // spotLightFolder.add(params, 'intensity', {Stopped: 0, medium: 0.5, strong: 1}).onChange(function(val) {
+    //     spotlight.intensity = val;
+    // })
+    ;
+
+    // gui.add(params, 'velocity_tissue',0,1).onChange(function(val){
+    //     velocity = val;
+    // });
+    gui.open();
 }

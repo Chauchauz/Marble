@@ -5,7 +5,7 @@
 }
 
 body{
-    background: black;
+    background: green;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -22,7 +22,7 @@ body#btn{
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: black;
+  /* background: black; */
 }
 
 
