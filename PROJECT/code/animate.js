@@ -42,61 +42,101 @@ function animate() {
     requestAnimationFrame(animate);
 }
 
+var alpha = 0;
+var dalpha = 1*Math.PI/1000;
+
 function movement() {
     if (controlMode == "floor") {
         if (tiltForward && floor.rotation.x > -0.5) {
-             floor.rotation.x -= floorSpeed;
-             floor.__dirtyPosition = true;
-             floor.__dirtyRotation = true;  
+            floor.rotation.x -= floorSpeed;
+            parent.rotation.x -= floorSpeed;
+            floor.__dirtyPosition = true;
+            floor.__dirtyRotation = true;
+            parent.__dirtyPosition = true;
+            parent.__dirtyRotation = true;
+
+            // alpha += dalpha;
+            // scene.traverse( function (node) {
+            //     if (node instanceof Physijs.BoxMesh && node.name == "cubes") {
+            //         // node.rotateOnWorldAxis(new THREE.Vector3(1,0,0), floorSpeed);
+            //         node.position.y += -cubeSpeed * Math.cos(alpha/2);
+            //         node.position.z += cubeSpeed * Math.sin(alpha/2);
+            //         node.__dirtyPosition = true;
+            //         node.__dirtyRotation = true;
+                      
+            //     }
+            // }) 
         }
         if (tiltLeft && floor.rotation.z < 0.5) {
             floor.rotation.z += floorSpeed;
-             floor.__dirtyPosition = true;
-             floor.__dirtyRotation = true;
+            parent.rotation.z += floorSpeed;
+            floor.__dirtyPosition = true;
+            floor.__dirtyRotation = true;
+            parent.__dirtyPosition = true;
+            parent.__dirtyRotation = true;
         }
         if (tiltBackward && floor.rotation.x < 0.5) {
             floor.rotation.x += floorSpeed;
-             floor.__dirtyPosition = true;
-             floor.__dirtyRotation = true;
+            parent.rotation.x += floorSpeed;
+            floor.__dirtyPosition = true;
+            floor.__dirtyRotation = true;
+            parent.__dirtyPosition = true;
+            parent.__dirtyRotation = true;
+
+
+            // alpha -= dalpha;
+            // scene.traverse( function (node) {
+            //     if (node instanceof Physijs.BoxMesh && node.name == "cubes") {
+            //         // node.rotateOnWorldAxis(new THREE.Vector3(1,0,0), floorSpeed);
+            //         node.position.y -= -cubeSpeed * Math.cos(alpha/2);
+            //         node.position.z -= cubeSpeed * Math.sin(alpha/2);
+            //         node.__dirtyPosition = true;
+            //         node.__dirtyRotation = true;
+                      
+            //     }
+            // })
         }
         if (tiltRight && floor.rotation.z > -0.5) {
             floor.rotation.z -= floorSpeed;
+            parent.rotation.z -= floorSpeed;
              floor.__dirtyPosition = true;
              floor.__dirtyRotation = true;
+             parent.__dirtyPosition = true;
+            parent.__dirtyRotation = true;
         }
     }
     
-    if (controlMode == "marble") {
-        //ACCELERATION
-        if (tiltForward && marbleZVel > -0.1) { //-Z
-            marbleZVel -= acceleration;
-        }
-        if (tiltLeft && marbleXVel > -0.1) { //-X
-            marbleXVel -= acceleration;
-        }
-        if (tiltBackward && marbleZVel < 0.1) { //+Z
-            marbleZVel += acceleration;
-        }
-        if (tiltRight && marbleXVel < 0.1) { //+X
-            marbleXVel += acceleration;
-        }
+    // if (controlMode == "marble") {
+    //     //ACCELERATION
+    //     if (tiltForward && marbleZVel > -0.1) { //-Z
+    //         marbleZVel -= acceleration;
+    //     }
+    //     if (tiltLeft && marbleXVel > -0.1) { //-X
+    //         marbleXVel -= acceleration;
+    //     }
+    //     if (tiltBackward && marbleZVel < 0.1) { //+Z
+    //         marbleZVel += acceleration;
+    //     }
+    //     if (tiltRight && marbleXVel < 0.1) { //+X
+    //         marbleXVel += acceleration;
+    //     }
 
-        //DECELERATION
-        if (!tiltForward && !tiltBackward) {
-            marbleZVel -= (marbleZVel > 0) ? acceleration / 2 : -acceleration / 2;
+    //     //DECELERATION
+    //     if (!tiltForward && !tiltBackward) {
+    //         marbleZVel -= (marbleZVel > 0) ? acceleration / 2 : -acceleration / 2;
 
-            if (marbleZVel != 0 && Math.abs(marbleZVel) <= acceleration) {
-                marbleZVel = 0;
-            }
-        }
-        if (!tiltLeft && !tiltRight) {
-            marbleXVel -= (marbleXVel > 0) ? acceleration / 2 : -acceleration / 2;
+    //         if (marbleZVel != 0 && Math.abs(marbleZVel) <= acceleration) {
+    //             marbleZVel = 0;
+    //         }
+    //     }
+    //     if (!tiltLeft && !tiltRight) {
+    //         marbleXVel -= (marbleXVel > 0) ? acceleration / 2 : -acceleration / 2;
 
-            if (marbleXVel != 0 && Math.abs(marbleXVel) <= acceleration) {
-                marbleXVel = 0;
-            }
-        }
-    }
+    //         if (marbleXVel != 0 && Math.abs(marbleXVel) <= acceleration) {
+    //             marbleXVel = 0;
+    //         }
+    //     }
+    // }
 
     //Bounce off walls
     // marbleXVel = ((rightCollision || leftCollision) && Math.abs(marbleXVel) > 0.01) ? -marbleXVel / 2 : marbleXVel;

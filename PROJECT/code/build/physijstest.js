@@ -1,5 +1,6 @@
 // var floor = null;
 var marble = null;
+var parent;
 //var wall;
 var ambientlight;
 var cameralight;
@@ -131,6 +132,7 @@ var cubes = [];
 var group = new THREE.Group();
 
 function createShapes(){
+    parent = createCube(1, 1, 1, 'skyblue');
     for (let j = 0; j < n; j++){
         for (let i = 0; i < n; i++) {
             if(array[i][j] == 0){
@@ -147,7 +149,7 @@ function createShapes(){
                 color.setHex(Math.random() * 0xffffff);
                 cubes[i] = createCube(1, 1, 1, color);
                 cubes[i].applyMatrix4(combined);
-                scene.add(cubes[i]);
+                parent.add(cubes[i]);
 
             }
         }
@@ -157,6 +159,7 @@ function createShapes(){
 function addShapes() {
     scene.add(floor);
     //scene.add(wall);
+    scene.add(parent);
     scene.add(marble);
     scene.add(ambientlight);
     scene.add(cameralight);
