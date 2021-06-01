@@ -35,11 +35,14 @@ function createFloor() {
     floor = new Physijs.BoxMesh(floorGeometry, floorMaterial, 0);
     // floor.rotation.x = Math.PI / 2;
     floor.__dirtyPosition = true;
+    //mesh.position.set(0,90,180);
     floor.__dirtyRotation = true;
     floor.setLinearVelocity(new THREE.Vector3(0, 0, 0));
     floor.setAngularVelocity(new THREE.Vector3(0, 0, 0));
     floor.geometry.computeBoundingBox();
     floor.receiveShadow = true;
+
+
 }
 
 //Create Marble

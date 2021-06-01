@@ -6,10 +6,10 @@ var tiltRight = false;
 
 //MARBLE MOVEMENT
 var controlMode = "floor"; //Control either the FLOOR or MARBLE
-const floorSpeed = 0.01;
+const floorSpeed = 0.0001;
 var marbleXVel = 0;
 var marbleZVel = 0;
-const acceleration = 0.005;
+const acceleration = 0.00;
 
 //COLLISION FUNCTION
 var rightRay = new THREE.Raycaster();
@@ -44,28 +44,39 @@ function animate() {
 
 function movement() {
     if (controlMode == "floor") {
-        if (tiltForward) {
+        if (tiltForward && floor.rotation.x > -0.5) {
             console.log("tilting forward");
-            // floor.rotation.x -= 0.01;
-            floor.setAngularVelocity(new THREE.Vector3(5, 5, 5));
-            // console.log(floor.rotation.x);
+             floor.rotation.x -= floorSpeed;
+             floor.__dirtyPosition = true;
+             floor.__dirtyRotation = true;  
+            //floor.setAngularVelocity(new THREE.Vector3(5, 5, 5));
+             console.log(floor.rotation.x);
         } else {
             // console.log("stopping");
-            floor.setAngularVelocity(new THREE.Vector3(0, 0, 0));
+            //wfloor.setAngularVelocity(new THREE.Vector3(0, 0, 0));
             
         }
         // if (tiltForward && floor.rotation.x > 2 * Math.PI / 5) {
         //     console.log("tilting forward");
         //     floor.rotation.x -= floorSpeed;
         // }
-        if (tiltLeft && floor.rotation.y < Math.PI / 10) {
-            floor.rotation.y += floorSpeed;
+        if (tiltLeft && floor.rotation.z < 0.5) {
+            floor.rotation.z += floorSpeed;
+             floor.__dirtyPosition = true;
+             floor.__dirtyRotation = true;
+            //floor.rotation.y += floorSpeed;
         }
-        if (tiltBackward && floor.rotation.x < 3 * Math.PI / 5) {
+        if (tiltBackward && floor.rotation.x < 0.5) {
             floor.rotation.x += floorSpeed;
+             floor.__dirtyPosition = true;
+             floor.__dirtyRotation = true;
+            //floor.rotation.x += floorSpeed;
         }
-        if (tiltRight && floor.rotation.y > -1 * Math.PI / 10) {
-            floor.rotation.y -= floorSpeed;
+        if (tiltRight && floor.rotation.z > -0.5) {
+            floor.rotation.z -= floorSpeed;
+             floor.__dirtyPosition = true;
+             floor.__dirtyRotation = true;
+            //floor.rotation.y -= floorSpeed;
         }
     }
 
