@@ -1,5 +1,6 @@
 setScene();
 createFloor();
+createRoof();
 createMarble();
 addLight();
 createCube();
