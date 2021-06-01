@@ -152,7 +152,7 @@ function createShapes(){
                 var tra = new THREE.Matrix4();
                 var combined = new THREE.Matrix4();
                 
-                sca.makeScale(1, 1 , 1);
+                sca.makeScale(1, 4 , 1);
                 tra.makeTranslation(((i)-5.5), 1, ((j)-5.5));
                 combined.multiply(tra);
                 combined.multiply(sca);
