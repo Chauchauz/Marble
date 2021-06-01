@@ -6,7 +6,7 @@ var tiltRight = false;
 
 //MARBLE MOVEMENT
 var controlMode = "floor"; //Control either the FLOOR or MARBLE
-const floorSpeed = 0.00005;
+const floorSpeed = 0.0005;
 var marbleXVel = 0;
 var marbleZVel = 0;
 const acceleration = 0.00;
@@ -50,10 +50,13 @@ function movement() {
         if (tiltForward && floor.rotation.x > -0.5) {
             floor.rotation.x -= floorSpeed;
             parent.rotation.x -= floorSpeed;
+            roof.rotation.x -= floorSpeed;
             floor.__dirtyPosition = true;
             floor.__dirtyRotation = true;
             parent.__dirtyPosition = true;
             parent.__dirtyRotation = true;
+            roof.__dirtyPosition = true;
+            roof.__dirtyRotation = true;
 
             // alpha += dalpha;
             // scene.traverse( function (node) {
@@ -70,18 +73,24 @@ function movement() {
         if (tiltLeft && floor.rotation.z < 0.5) {
             floor.rotation.z += floorSpeed;
             parent.rotation.z += floorSpeed;
+            roof.rotation.z += floorSpeed;
             floor.__dirtyPosition = true;
             floor.__dirtyRotation = true;
             parent.__dirtyPosition = true;
             parent.__dirtyRotation = true;
+            roof.__dirtyPosition = true;
+            roof.__dirtyRotation = true;
         }
         if (tiltBackward && floor.rotation.x < 0.5) {
             floor.rotation.x += floorSpeed;
             parent.rotation.x += floorSpeed;
+            roof.rotation.x += floorSpeed;
             floor.__dirtyPosition = true;
             floor.__dirtyRotation = true;
             parent.__dirtyPosition = true;
             parent.__dirtyRotation = true;
+            roof.__dirtyPosition = true;
+            roof.__dirtyRotation = true;
 
 
             // alpha -= dalpha;

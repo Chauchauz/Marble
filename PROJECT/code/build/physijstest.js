@@ -1,6 +1,7 @@
 // var floor = null;
 var marble = null;
 var parent;
+var roof;
 //var wall;
 var ambientlight;
 var cameralight;
@@ -53,19 +54,15 @@ function createFloor() {
 
 }
 
-function createCeiling() {
-    var ceilingMaterial = new THREE.MeshLambertMaterial();
-    ceilingMaterial.color = new THREE.Color(0.7, 0.7, 0.7);
-    ceilingMaterial.side = THREE.DoubleSide;
-    // var floorGeometry = new THREE.PlaneGeometry(12, 12, 12, 12);
-    var ceilingGeometry = new THREE.BoxGeometry(12, 1, 12);
-    // floor = new Physijs.PlaneMesh(floorGeometry, floorMaterial);
-    ceiling = new Physijs.BoxMesh(ceilingGeometry, ceilingMaterial, 0);
-    ceiling.position.y = 2;
-   
-
+function createRoof() {
+    var roofMaterial = new THREE.MeshPhongMaterial();
+    roofMaterial.color = new THREE.Color(1, 1, 1);
+    roofMaterial.transparent = true;
+    roofMaterial.opacity = 0;
+    var roofGeo = new THREE.BoxGeometry(12, 1, 12);
+    roof = new Physijs.BoxMesh(roofGeo, roofMaterial, 0);
+    roof.position.y = 3;
 }
-
 
 //Create Marble
 function createMarble() {
@@ -77,6 +74,7 @@ function createMarble() {
     marble.position.x = -5.5;
     marble.position.y = 1;
     marble.position.z = -4.5;
+    // MathUtils.clamp(marble.position.y, 0, 0);
     marble.castShadow=true;
     
 
@@ -146,7 +144,7 @@ var cubes = [];
 var group = new THREE.Group();
 
 function createShapes(){
-    parent = createCube(0, 0, 0, 'skyblue');
+    parent = createCube(1, 1, 1, 'skyblue');
     for (let j = 0; j < n; j++){
         for (let i = 0; i < n; i++) {
             if(array[i][j] == 0){
@@ -173,10 +171,10 @@ function createShapes(){
 function addShapes() {
     scene.add(floor);
     //scene.add(wall);
+    scene.add(roof);
     scene.add(parent);
     scene.add(marble);
     scene.add(ambientlight);
     scene.add(cameralight);
     scene.add(spotlight);
-    scene.add(ceiling);
 }
