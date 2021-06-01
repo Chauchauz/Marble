@@ -36,7 +36,7 @@ function animate() {
     scene.simulate();
     renderer.render(scene, camera);
     requestAnimationFrame(movement);
-    // controls.update();
+    controls.update();
 
 
     requestAnimationFrame(animate);
@@ -45,46 +45,26 @@ function animate() {
 function movement() {
     if (controlMode == "floor") {
         if (tiltForward && floor.rotation.x > -0.5) {
-            console.log("tilting forward");
              floor.rotation.x -= floorSpeed;
              floor.__dirtyPosition = true;
              floor.__dirtyRotation = true;  
-            //floor.setAngularVelocity(new THREE.Vector3(5, 5, 5));
-             console.log(floor.rotation.x);
-        } else {
-            // console.log("stopping");
-            //wfloor.setAngularVelocity(new THREE.Vector3(0, 0, 0));
-            
         }
-        // if (tiltForward && floor.rotation.x > 2 * Math.PI / 5) {
-        //     console.log("tilting forward");
-        //     floor.rotation.x -= floorSpeed;
-        // }
         if (tiltLeft && floor.rotation.z < 0.5) {
             floor.rotation.z += floorSpeed;
              floor.__dirtyPosition = true;
              floor.__dirtyRotation = true;
-            //floor.rotation.y += floorSpeed;
         }
         if (tiltBackward && floor.rotation.x < 0.5) {
             floor.rotation.x += floorSpeed;
              floor.__dirtyPosition = true;
              floor.__dirtyRotation = true;
-            //floor.rotation.x += floorSpeed;
         }
         if (tiltRight && floor.rotation.z > -0.5) {
             floor.rotation.z -= floorSpeed;
              floor.__dirtyPosition = true;
              floor.__dirtyRotation = true;
-            //floor.rotation.y -= floorSpeed;
         }
     }
-
-    // if (controlMode == "floor") {
-    //     if (tiltForward) {
-    //         floor.rotation.x += 0.1;
-    //     }
-    // }
     
     if (controlMode == "marble") {
         //ACCELERATION
@@ -146,31 +126,31 @@ function movement() {
 //     requestAnimationFrame(boardTilt);
 // }
 
-function collision() {
-    rightRay.set(marble.position, new THREE.Vector3(1, 0, 0).normalize());
-    var rightIntersects = rightRay.intersectObjects(scene.children);
-    leftRay.set(marble.position, new THREE.Vector3(-1, 0, 0).normalize());
-    var leftIntersects = leftRay.intersectObjects(scene.children);
-    forwardRay.set(marble.position, new THREE.Vector3(0, 0, -1).normalize());
-    var forwardIntersects = forwardRay.intersectObjects(scene.children);
-    backRay.set(marble.position, new THREE.Vector3(0, 0, 1).normalize());
-    var backIntersects = backRay.intersectObjects(scene.children);
+// function collision() {
+//     rightRay.set(marble.position, new THREE.Vector3(1, 0, 0).normalize());
+//     var rightIntersects = rightRay.intersectObjects(scene.children);
+//     leftRay.set(marble.position, new THREE.Vector3(-1, 0, 0).normalize());
+//     var leftIntersects = leftRay.intersectObjects(scene.children);
+//     forwardRay.set(marble.position, new THREE.Vector3(0, 0, -1).normalize());
+//     var forwardIntersects = forwardRay.intersectObjects(scene.children);
+//     backRay.set(marble.position, new THREE.Vector3(0, 0, 1).normalize());
+//     var backIntersects = backRay.intersectObjects(scene.children);
 
-    if (rightIntersects.length > 0) {
-        rightCollision = (rightIntersects[0].object.position.x - marble.position.x < 0.5) ? true : false;
-    }
-    if (leftIntersects.length > 0) {
-        leftCollision = (marble.position.x - leftIntersects[0].object.position.x < 0.5) ? true : false;
-    }
-    if (forwardIntersects.length > 0) {
-        forwardCollision = (marble.position.z - forwardIntersects[0].object.position.z < 0.5) ? true : false;
-    }
-    if (backIntersects.length > 0) {
-        backCollision = (backIntersects[0].object.position.z - marble.position.z < 0.5) ? true : false;
-    }
+//     if (rightIntersects.length > 0) {
+//         rightCollision = (rightIntersects[0].object.position.x - marble.position.x < 0.5) ? true : false;
+//     }
+//     if (leftIntersects.length > 0) {
+//         leftCollision = (marble.position.x - leftIntersects[0].object.position.x < 0.5) ? true : false;
+//     }
+//     if (forwardIntersects.length > 0) {
+//         forwardCollision = (marble.position.z - forwardIntersects[0].object.position.z < 0.5) ? true : false;
+//     }
+//     if (backIntersects.length > 0) {
+//         backCollision = (backIntersects[0].object.position.z - marble.position.z < 0.5) ? true : false;
+//     }
     
-    requestAnimationFrame(collision);
-}
+//     requestAnimationFrame(collision);
+// }
 
 function rainbowMarble() {
     if (rainbow) {
@@ -321,4 +301,4 @@ var onKeyDown = function ( event ) {
 //     //     velocity = val;
 //     // });
 //     gui.open();
-// }
+//}

@@ -33,14 +33,20 @@ function createFloor() {
     var floorGeometry = new THREE.BoxGeometry(12, 1, 12);
     // floor = new Physijs.PlaneMesh(floorGeometry, floorMaterial);
     floor = new Physijs.BoxMesh(floorGeometry, floorMaterial, 0);
-    // floor.rotation.x = Math.PI / 2;
     floor.__dirtyPosition = true;
-    //mesh.position.set(0,90,180);
+    
     floor.__dirtyRotation = true;
     floor.setLinearVelocity(new THREE.Vector3(0, 0, 0));
     floor.setAngularVelocity(new THREE.Vector3(0, 0, 0));
     floor.geometry.computeBoundingBox();
     floor.receiveShadow = true;
+
+    floor.addEventListener( 'collision', function( other_object, linear_velocity, angular_velocity ) {
+        // `this` is the mesh with the event listener
+        // other_object is the object `this` collided with
+        console.log("floor");
+        // linear_velocity and angular_velocity are Vector3 objects which represent the velocity of the collision
+    });
 
 
 }
@@ -52,13 +58,9 @@ function createMarble() {
     marbleMaterial.wireframe = false;
     var marbleGeometry = new THREE.SphereGeometry(0.5, 20, 20);
     marble = new Physijs.SphereMesh(marbleGeometry, marbleMaterial);
-    marble.position.y = 2;
-    // marble.__dirtyPosition = true;
-    // marble.__dirtyRotation = true;
-    // marble.setLinearVelocity(new THREE.Vector3(0, 0, 0));
-    // marble.setAngularVelocity(new THREE.Vector3(0, 0, 0));
-    // marble.position.x = 9;
-    // marble.castShadow = true;
+    marble.position.x = -5.5;
+    marble.position.y = 1;
+    marble.position.z = -4.5;
 
     marble.addEventListener( 'collision', function( other_object, linear_velocity, angular_velocity ) {
         // `this` is the mesh with the event listener
@@ -73,13 +75,7 @@ function createCube(w, h, d, color) {
     material.color = new THREE.Color(color);
     material.wireframe = false;
     var geometry_cube = new THREE.BoxGeometry(w, h, d);
-    var square = new Physijs.BoxMesh(geometry_cube, material);
-
-    var tra = new THREE.Matrix4();
-    var combined = new THREE.Matrix4();
-    tra.makeTranslation(2, 2, 2);
-    combined.multiply(tra);
-    square.applyMatrix(combined);
+    var square = new Physijs.BoxMesh(geometry_cube, material, 0);
 
     square.addEventListener( 'collision', function( other_object, linear_velocity, angular_velocity ) {
         // `this` is the mesh with the event listener
@@ -96,11 +92,52 @@ function createCube(w, h, d, color) {
     return square;
 }
 
+//create maze
+var array = [];
+array[0] = [0 ,1 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0];
+array[1] = [0 ,1 ,0 ,0 ,1 ,1 ,1 ,0 ,1 ,1 ,1 ,0];
+array[2] = [0 ,1 ,1 ,1 ,1 ,0 ,1 ,0 ,1 ,0 ,1 ,0];
+array[3] = [0 ,0 ,0 ,0 ,0 ,0 ,1 ,0 ,1 ,0 ,1 ,0];
+array[4] = [0 ,0 ,0 ,1 ,1 ,1, 1 ,0 ,1 ,0 ,1 ,0];
+array[5] = [0 ,0 ,0 ,1 ,0 ,0 ,0 ,0 ,1 ,0 ,1 ,0];
+array[6] = [0 ,1 ,1 ,1 ,0 ,0 ,0 ,1 ,1 ,0 ,1 ,0];
+array[7] = [0 ,1 ,0 ,0 ,0 ,0 ,1 ,1 ,0 ,0 ,1 ,0];
+array[8] = [0 ,1 ,0 ,0 ,0 ,0 ,1 ,0 ,1 ,1 ,1 ,0];
+array[9] = [0 ,1 ,1 ,1 ,1 ,1 ,1 ,0 ,1 ,0 ,0 ,0];
+array[10] = [0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 ,1 ,0 ,0 ,0];
+array[11] = [0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 ,0 ,0 ,0 ,0];
+var n = 12;
+var cubes = [];
+var group = new THREE.Group();
+
+function createShapes(){
+    for (let j = 0; j < n; j++){
+        for (let i = 0; i < n; i++) {
+            if(array[i][j] == 0){
+                var sca = new THREE.Matrix4();
+                var tra = new THREE.Matrix4();
+                var combined = new THREE.Matrix4();
+                
+                sca.makeScale(1, 1 , 1);
+                tra.makeTranslation(((i)-5.5), 1, ((j)-5.5));
+                combined.multiply(tra);
+                combined.multiply(sca);
+
+                var color = new THREE.Color(0xffffff);
+                color.setHex(Math.random() * 0xffffff);
+                cubes[i] = createCube(1, 1, 1, color);
+                cubes[i].applyMatrix4(combined);
+                scene.add(cubes[i]);
+
+            }
+        }
+    }
+}
+
 function addShapes() {
     scene.add(floor);
     scene.add(marble);
     scene.add(ambientlight);
     scene.add(cameralight);
     scene.add(spotlight);
-    scene.add(createCube(1, 1, 1, 'skyblue'));
 }
