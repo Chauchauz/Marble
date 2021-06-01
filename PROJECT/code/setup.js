@@ -3,13 +3,22 @@ var camera;
 var renderer;
 var controls;
 
+Physijs.scripts.worker = 'js/physijs_worker.js';
+Physijs.scripts.ammo = 'ammo.js';
+
 
 //Setup the 3 main components: scene, camera, renderer
 function setScene() {
-    scene = new THREE.Scene();
-    // const loader = new THREE.Color('black');
 
     
+    scene = new Physijs.Scene();
+    scene.background = new THREE.Color('black');
+
+    scene.addEventListener( 'update', function() {
+        // console.log("Finished setting up");
+    });
+
+    // console.log("Bleh");
     
     var ratio = window.innerWidth / window.innerHeight;
     camera = new THREE.PerspectiveCamera(45, ratio, 0.1, 1000);

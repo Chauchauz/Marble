@@ -33,8 +33,11 @@ const colorSpeed = 0.025;
 var gui;
 
 function animate() {
+    scene.simulate();
     renderer.render(scene, camera);
     controls.update();
+
+
     requestAnimationFrame(animate);
 }
 
@@ -198,7 +201,6 @@ var onKeyUp = function ( event ) {
 }
 
 var onKeyDown = function ( event ) {
-
     switch( event.keyCode ) {
 
         //case 38: // up
@@ -225,52 +227,52 @@ var onKeyDown = function ( event ) {
 
 }
 
-function buildGui() {
-    gui = new dat.GUI();
+// function buildGui() {
+//     gui = new dat.GUI();
 
-    var spotLightFolder = gui.addFolder('Spotlight');
-    var spotLightParams = {
-        color: spotlight.color.getHex(),
-        intensity: spotlight.intensity
-    }
+//     var spotLightFolder = gui.addFolder('Spotlight');
+//     var spotLightParams = {
+//         color: spotlight.color.getHex(),
+//         intensity: spotlight.intensity
+//     }
 
-    spotLightFolder.addColor(spotLightParams, 'color').onChange(function(val) {
-        spotlight.color.setHex(val);
-    })
-    spotLightFolder.add(spotLightParams, 'intensity', 0, 1).step(0.1).onChange(function(val) {
-        spotlight.intensity = val;
-    })
+//     spotLightFolder.addColor(spotLightParams, 'color').onChange(function(val) {
+//         spotlight.color.setHex(val);
+//     })
+//     spotLightFolder.add(spotLightParams, 'intensity', 0, 1).step(0.1).onChange(function(val) {
+//         spotlight.intensity = val;
+//     })
 
-    var ballFolder = gui.addFolder('Marble');
-    var ballParams = {
-        rainbow_color: rainbow,
-        color: marble.material.color.getHex()
-    }
+//     var ballFolder = gui.addFolder('Marble');
+//     var ballParams = {
+//         rainbow_color: rainbow,
+//         color: marble.material.color.getHex()
+//     }
 
-    ballFolder.add(ballParams, 'rainbow_color').listen().onChange(function(val) {
-        rainbow = val;
+//     ballFolder.add(ballParams, 'rainbow_color').listen().onChange(function(val) {
+//         rainbow = val;
 
-        if (val) {
-            requestAnimationFrame(rainbowMarble);
-        }
-    })
-    ballFolder.addColor(ballParams, 'color').onChange(function(val) {
-        rainbow = false;
-        ballParams.rainbow_color = false;
-        cancelAnimationFrame(rainbowMarble);
-        marble.material.color.setHex(val);
-    })
+//         if (val) {
+//             requestAnimationFrame(rainbowMarble);
+//         }
+//     })
+//     ballFolder.addColor(ballParams, 'color').onChange(function(val) {
+//         rainbow = false;
+//         ballParams.rainbow_color = false;
+//         cancelAnimationFrame(rainbowMarble);
+//         marble.material.color.setHex(val);
+//     })
     
 
 
 
-    // spotLightFolder.add(params, 'intensity', {Stopped: 0, medium: 0.5, strong: 1}).onChange(function(val) {
-    //     spotlight.intensity = val;
-    // })
-    ;
+//     // spotLightFolder.add(params, 'intensity', {Stopped: 0, medium: 0.5, strong: 1}).onChange(function(val) {
+//     //     spotlight.intensity = val;
+//     // })
+//     ;
 
-    // gui.add(params, 'velocity_tissue',0,1).onChange(function(val){
-    //     velocity = val;
-    // });
-    gui.open();
-}
+//     // gui.add(params, 'velocity_tissue',0,1).onChange(function(val){
+//     //     velocity = val;
+//     // });
+//     gui.open();
+// }

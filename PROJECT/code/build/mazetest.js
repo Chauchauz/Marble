@@ -138,6 +138,7 @@ function createShapes(){
                 cubes[i] = createCube(1, 1, 1, color);
                 cubes[i].applyMatrix(combined);
                 group.add(cubes[i]);
+
             }
         }
     }
@@ -174,6 +175,10 @@ function generateMaze() {
     console.log(starting_pos);
 }
 
+function test() {
+    
+}
+
 //Add all shapes to the scene
 function addShapes() {
     scene.add(floor);
@@ -186,9 +191,9 @@ function addShapes() {
     //     }
     // }
 
-    for (i = 0; i < walls.length; i++) {
-        scene.add(walls[i]);
-    }
+    // for (i = 0; i < walls.length; i++) {
+    //     scene.add(walls[i]);
+    // }
 
     scene.add(camera);
     scene.add(ambientlight);
