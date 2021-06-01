@@ -16,6 +16,14 @@ function setScene() {
     scene = new Physijs.Scene();
     scene.background = new THREE.Color('black');
 
+    var bgTexture = new THREE.TextureLoader().load("code/background.jpg");
+    bgTexture.minFilter = THREE.LinearFilter;
+    scene.background = bgTexture;
+    // const texture = new THREE.TextureLoader().load("background.jpg");
+    // texture.wrapS = THREE.RepeatWrapping;
+    // texture.wrapT = THREE.RepeatWrapping;
+    // texture.repeat.set( 4, 4 );
+
     scene.addEventListener( 'update', function() {
         // console.log("Finished setting up");
     });
