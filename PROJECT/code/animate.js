@@ -6,7 +6,7 @@ var tiltRight = false;
 
 //MARBLE MOVEMENT
 var controlMode = "floor"; //Control either the FLOOR or MARBLE
-const floorSpeed = 0.0005;
+const floorSpeed = 0.00005;
 var marbleXVel = 0;
 var marbleZVel = 0;
 const acceleration = 0.00;
@@ -50,13 +50,13 @@ function movement() {
         if (tiltForward && floor.rotation.x > -0.5) {
             floor.rotation.x -= floorSpeed;
             parent.rotation.x -= floorSpeed;
-            roof.rotation.x -= floorSpeed;
+            //roof.rotation.x -= floorSpeed;
             floor.__dirtyPosition = true;
             floor.__dirtyRotation = true;
             parent.__dirtyPosition = true;
             parent.__dirtyRotation = true;
-            roof.__dirtyPosition = true;
-            roof.__dirtyRotation = true;
+           // roof.__dirtyPosition = true;
+            //roof.__dirtyRotation = true;
 
             // alpha += dalpha;
             // scene.traverse( function (node) {
@@ -73,24 +73,24 @@ function movement() {
         if (tiltLeft && floor.rotation.z < 0.5) {
             floor.rotation.z += floorSpeed;
             parent.rotation.z += floorSpeed;
-            roof.rotation.z += floorSpeed;
+            //roof.rotation.z += floorSpeed;
             floor.__dirtyPosition = true;
             floor.__dirtyRotation = true;
             parent.__dirtyPosition = true;
             parent.__dirtyRotation = true;
-            roof.__dirtyPosition = true;
-            roof.__dirtyRotation = true;
+            //roof.__dirtyPosition = true;
+            //roof.__dirtyRotation = true;
         }
         if (tiltBackward && floor.rotation.x < 0.5) {
             floor.rotation.x += floorSpeed;
             parent.rotation.x += floorSpeed;
-            roof.rotation.x += floorSpeed;
+            //roof.rotation.x += floorSpeed;
             floor.__dirtyPosition = true;
             floor.__dirtyRotation = true;
             parent.__dirtyPosition = true;
             parent.__dirtyRotation = true;
-            roof.__dirtyPosition = true;
-            roof.__dirtyRotation = true;
+           //roof.__dirtyPosition = true;
+            //roof.__dirtyRotation = true;
 
 
             // alpha -= dalpha;
@@ -302,52 +302,52 @@ var onKeyDown = function ( event ) {
 
 }
 
-// function buildGui() {
-//     gui = new dat.GUI();
+function buildGui() {
+    gui = new dat.GUI();
 
-//     var spotLightFolder = gui.addFolder('Spotlight');
-//     var spotLightParams = {
-//         color: spotlight.color.getHex(),
-//         intensity: spotlight.intensity
-//     }
+    var spotLightFolder = gui.addFolder('Spotlight');
+    var spotLightParams = {
+        color: spotlight.color.getHex(),
+        intensity: spotlight.intensity
+    }
 
-//     spotLightFolder.addColor(spotLightParams, 'color').onChange(function(val) {
-//         spotlight.color.setHex(val);
-//     })
-//     spotLightFolder.add(spotLightParams, 'intensity', 0, 1).step(0.1).onChange(function(val) {
-//         spotlight.intensity = val;
-//     })
+    spotLightFolder.addColor(spotLightParams, 'color').onChange(function(val) {
+        spotlight.color.setHex(val);
+    })
+    spotLightFolder.add(spotLightParams, 'intensity', 0, 1).step(0.1).onChange(function(val) {
+        spotlight.intensity = val;
+    })
 
-//     var ballFolder = gui.addFolder('Marble');
-//     var ballParams = {
-//         rainbow_color: rainbow,
-//         color: marble.material.color.getHex()
-//     }
+    var ballFolder = gui.addFolder('Marble');
+    var ballParams = {
+        rainbow_color: rainbow,
+        color: marble.material.color.getHex()
+    }
 
-//     ballFolder.add(ballParams, 'rainbow_color').listen().onChange(function(val) {
-//         rainbow = val;
+    ballFolder.add(ballParams, 'rainbow_color').listen().onChange(function(val) {
+        rainbow = val;
 
-//         if (val) {
-//             requestAnimationFrame(rainbowMarble);
-//         }
-//     })
-//     ballFolder.addColor(ballParams, 'color').onChange(function(val) {
-//         rainbow = false;
-//         ballParams.rainbow_color = false;
-//         cancelAnimationFrame(rainbowMarble);
-//         marble.material.color.setHex(val);
-//     })
+        if (val) {
+            requestAnimationFrame(rainbowMarble);
+        }
+    })
+    ballFolder.addColor(ballParams, 'color').onChange(function(val) {
+        rainbow = false;
+        ballParams.rainbow_color = false;
+        cancelAnimationFrame(rainbowMarble);
+        marble.material.color.setHex(val);
+    })
     
 
 
 
-//     // spotLightFolder.add(params, 'intensity', {Stopped: 0, medium: 0.5, strong: 1}).onChange(function(val) {
-//     //     spotlight.intensity = val;
-//     // })
-//     ;
+    // spotLightFolder.add(params, 'intensity', {Stopped: 0, medium: 0.5, strong: 1}).onChange(function(val) {
+    //     spotlight.intensity = val;
+    // })
+    ;
 
-//     // gui.add(params, 'velocity_tissue',0,1).onChange(function(val){
-//     //     velocity = val;
-//     // });
-//     gui.open();
-//}
+    // gui.add(params, 'velocity_tissue',0,1).onChange(function(val){
+    //     velocity = val;
+    // });
+    gui.open();
+}

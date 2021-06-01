@@ -57,11 +57,11 @@ function createFloor() {
 function createRoof() {
     var roofMaterial = new THREE.MeshPhongMaterial();
     roofMaterial.color = new THREE.Color(1, 1, 1);
-    roofMaterial.transparent = true;
+    roofMaterial.transparent = false;
     roofMaterial.opacity = 0;
     var roofGeo = new THREE.BoxGeometry(12, 1, 12);
     roof = new Physijs.BoxMesh(roofGeo, roofMaterial, 0);
-    roof.position.y = 3;
+    roof.position.y = 2.78 ;
 }
 
 //Create Marble
@@ -171,7 +171,7 @@ function createShapes(){
 function addShapes() {
     scene.add(floor);
     //scene.add(wall);
-    scene.add(roof);
+    //scene.add(roof);
     scene.add(parent);
     scene.add(marble);
     scene.add(ambientlight);
