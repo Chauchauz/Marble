@@ -1,10 +1,11 @@
 // var floor = null;
 var marble = null;
-
+var wall;
 var ambientlight;
 var cameralight;
 var spotlight;
 var spotLightHelper;
+
 
 function addLight() {
     //add basic light from camera towards the scene
@@ -69,6 +70,19 @@ function createMarble() {
         // linear_velocity and angular_velocity are Vector3 objects which represent the velocity of the collision
     });
 }
+
+function createWall(x, y, z) {
+    var wallMaterial = new THREE.MeshPhongMaterial();
+    wallMaterial.color = new THREE.Color(0x00AAFF);
+    wallMaterial.wireframe = false;
+    var wallGeometry = new THREE.BoxGeometry(0.1, 1, 1);
+    wall = new Physijs.BoxMesh(wallGeometry, marbleMaterial);
+    //wall = new THREE.Mesh(wallGeometry, wallMaterial);
+    wall.position.set(x, y, z);
+    wall.castShadow=true;
+    return wall;
+}
+
 
 function createCube(w, h, d, color) {
     var material = new THREE.MeshPhongMaterial();
@@ -136,6 +150,7 @@ function createShapes(){
 
 function addShapes() {
     scene.add(floor);
+    scene.add(wall);
     scene.add(marble);
     scene.add(ambientlight);
     scene.add(cameralight);
