@@ -31,7 +31,7 @@ function setScene() {
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     document.body.appendChild(renderer.domElement);
-    controls = new THREE.OrbitControls(camera, renderer.domElement);
+    //controls = new THREE.OrbitControls(camera, renderer.domElement);
     // controls = new THREE.DragControls(floor, camera, renderer.domElement)(THREE);
 }
 

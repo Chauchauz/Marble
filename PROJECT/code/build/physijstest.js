@@ -15,7 +15,7 @@ function addLight() {
     ambientlight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 0.2);
 
     // add spotlight
-    spotlight = new THREE.SpotLight(new THREE.Color(1,1,1), 0.2);
+    spotlight = new THREE.SpotLight(new THREE.Color(1,1,1), 1);
     spotlight.position.y = 10;
     spotlight.position.x = 10;
     spotlight.position.z = -8;
@@ -48,7 +48,7 @@ function createFloor() {
         console.log("floor");
         // linear_velocity and angular_velocity are Vector3 objects which represent the velocity of the collision
     });
-
+   
 
 }
 
@@ -57,11 +57,14 @@ function createMarble() {
     var marbleMaterial = new THREE.MeshPhongMaterial();
     marbleMaterial.color = new THREE.Color(0x000000);
     marbleMaterial.wireframe = false;
-    var marbleGeometry = new THREE.SphereGeometry(0.5, 20, 20);
+    var marbleGeometry = new THREE.SphereGeometry(0.35, 15, 15);
     marble = new Physijs.SphereMesh(marbleGeometry, marbleMaterial);
     marble.position.x = -5.5;
     marble.position.y = 1;
     marble.position.z = -4.5;
+    marble.castShadow=true;
+    
+
 
     marble.addEventListener( 'collision', function( other_object, linear_velocity, angular_velocity ) {
         // `this` is the mesh with the event listener
@@ -90,6 +93,9 @@ function createCube(w, h, d, color) {
     material.wireframe = false;
     var geometry_cube = new THREE.BoxGeometry(w, h, d);
     var square = new Physijs.BoxMesh(geometry_cube, material, 0);
+    square.castShadow=true;
+
+    square.name="cubes";    
 
     square.addEventListener( 'collision', function( other_object, linear_velocity, angular_velocity ) {
         // `this` is the mesh with the event listener

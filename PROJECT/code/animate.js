@@ -6,7 +6,7 @@ var tiltRight = false;
 
 //MARBLE MOVEMENT
 var controlMode = "floor"; //Control either the FLOOR or MARBLE
-const floorSpeed = 0.0001;
+const floorSpeed = 0.00005;
 var marbleXVel = 0;
 var marbleZVel = 0;
 const acceleration = 0.00;
@@ -36,7 +36,7 @@ function animate() {
     scene.simulate();
     renderer.render(scene, camera);
     requestAnimationFrame(movement);
-    controls.update();
+    //controls.update();
 
 
     requestAnimationFrame(animate);
