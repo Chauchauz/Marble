@@ -53,6 +53,20 @@ function createFloor() {
 
 }
 
+function createCeiling() {
+    var ceilingMaterial = new THREE.MeshLambertMaterial();
+    ceilingMaterial.color = new THREE.Color(0.7, 0.7, 0.7);
+    ceilingMaterial.side = THREE.DoubleSide;
+    // var floorGeometry = new THREE.PlaneGeometry(12, 12, 12, 12);
+    var ceilingGeometry = new THREE.BoxGeometry(12, 1, 12);
+    // floor = new Physijs.PlaneMesh(floorGeometry, floorMaterial);
+    ceiling = new Physijs.BoxMesh(ceilingGeometry, ceilingMaterial, 0);
+    ceiling.position.y = 2;
+   
+
+}
+
+
 //Create Marble
 function createMarble() {
     var marbleMaterial = new THREE.MeshPhongMaterial();
@@ -164,4 +178,5 @@ function addShapes() {
     scene.add(ambientlight);
     scene.add(cameralight);
     scene.add(spotlight);
+    scene.add(ceiling);
 }

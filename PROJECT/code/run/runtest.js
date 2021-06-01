@@ -4,6 +4,7 @@ createMarble();
 addLight();
 createCube();
 createShapes();
+createCeiling();
 addShapes();
 //createWall(1,1,1);
 document.addEventListener( 'keydown', onKeyDown, false );
