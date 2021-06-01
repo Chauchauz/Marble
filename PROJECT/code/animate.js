@@ -36,8 +36,6 @@ function animate() {
     scene.simulate();
     renderer.render(scene, camera);
     requestAnimationFrame(movement);
-    //controls.update();
-
 
     requestAnimationFrame(animate);
 }
@@ -50,60 +48,30 @@ function movement() {
         if (tiltForward && floor.rotation.x > -0.5) {
             floor.rotation.x -= floorSpeed;
             parent.rotation.x -= floorSpeed;
-            //roof.rotation.x -= floorSpeed;
             floor.__dirtyPosition = true;
             floor.__dirtyRotation = true;
             parent.__dirtyPosition = true;
             parent.__dirtyRotation = true;
-           // roof.__dirtyPosition = true;
-            //roof.__dirtyRotation = true;
 
-            // alpha += dalpha;
-            // scene.traverse( function (node) {
-            //     if (node instanceof Physijs.BoxMesh && node.name == "cubes") {
-            //         // node.rotateOnWorldAxis(new THREE.Vector3(1,0,0), floorSpeed);
-            //         node.position.y += -cubeSpeed * Math.cos(alpha/2);
-            //         node.position.z += cubeSpeed * Math.sin(alpha/2);
-            //         node.__dirtyPosition = true;
-            //         node.__dirtyRotation = true;
-                      
-            //     }
-            // }) 
         }
         if (tiltLeft && floor.rotation.z < 0.5) {
             floor.rotation.z += floorSpeed;
             parent.rotation.z += floorSpeed;
-            //roof.rotation.z += floorSpeed;
+
             floor.__dirtyPosition = true;
             floor.__dirtyRotation = true;
             parent.__dirtyPosition = true;
             parent.__dirtyRotation = true;
-            //roof.__dirtyPosition = true;
-            //roof.__dirtyRotation = true;
+
         }
         if (tiltBackward && floor.rotation.x < 0.5) {
             floor.rotation.x += floorSpeed;
             parent.rotation.x += floorSpeed;
-            //roof.rotation.x += floorSpeed;
             floor.__dirtyPosition = true;
             floor.__dirtyRotation = true;
             parent.__dirtyPosition = true;
             parent.__dirtyRotation = true;
-           //roof.__dirtyPosition = true;
-            //roof.__dirtyRotation = true;
 
-
-            // alpha -= dalpha;
-            // scene.traverse( function (node) {
-            //     if (node instanceof Physijs.BoxMesh && node.name == "cubes") {
-            //         // node.rotateOnWorldAxis(new THREE.Vector3(1,0,0), floorSpeed);
-            //         node.position.y -= -cubeSpeed * Math.cos(alpha/2);
-            //         node.position.z -= cubeSpeed * Math.sin(alpha/2);
-            //         node.__dirtyPosition = true;
-            //         node.__dirtyRotation = true;
-                      
-            //     }
-            // })
         }
         if (tiltRight && floor.rotation.z > -0.5) {
             floor.rotation.z -= floorSpeed;
@@ -157,23 +125,6 @@ function movement() {
 
     requestAnimationFrame(movement);
 }
-
-// function boardTilt() {
-    
-    
-
-//     // add event listener to highlight dragged objects
-
-//     controls.addEventListener( 'dragstart', function ( event ) {
-//         console.log("start drag");
-//     } );
-
-//     controls.addEventListener( 'dragend', function ( event ) {
-//         console.log("end drag");
-//     } );
-
-//     requestAnimationFrame(boardTilt);
-// }
 
 // function collision() {
 //     rightRay.set(marble.position, new THREE.Vector3(1, 0, 0).normalize());
@@ -243,9 +194,6 @@ function rainbowMarble() {
         marble.material.color = new THREE.Color(red, green, blue);
         requestAnimationFrame(rainbowMarble);
     }
-
-    // marble.material.color = new THREE.Color(red, green, blue);
-    // requestAnimationFrame(rainbowMarble);
 }
 
 var onKeyUp = function ( event ) {
@@ -337,17 +285,6 @@ function buildGui() {
         cancelAnimationFrame(rainbowMarble);
         marble.material.color.setHex(val);
     })
-    
 
-
-
-    // spotLightFolder.add(params, 'intensity', {Stopped: 0, medium: 0.5, strong: 1}).onChange(function(val) {
-    //     spotlight.intensity = val;
-    // })
-    ;
-
-    // gui.add(params, 'velocity_tissue',0,1).onChange(function(val){
-    //     velocity = val;
-    // });
     gui.open();
 }

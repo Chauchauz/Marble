@@ -32,9 +32,7 @@ function createFloor() {
     var floorMaterial = new THREE.MeshLambertMaterial();
     floorMaterial.color = new THREE.Color(0.7, 0.7, 0.7);
     floorMaterial.side = THREE.DoubleSide;
-    // var floorGeometry = new THREE.PlaneGeometry(12, 12, 12, 12);
     var floorGeometry = new THREE.BoxGeometry(12, 1, 12);
-    // floor = new Physijs.PlaneMesh(floorGeometry, floorMaterial);
     floor = new Physijs.BoxMesh(floorGeometry, floorMaterial, 0);
     floor.__dirtyPosition = true;
     
@@ -45,10 +43,6 @@ function createFloor() {
     floor.receiveShadow = true;
 
     floor.addEventListener( 'collision', function( other_object, linear_velocity, angular_velocity ) {
-        // `this` is the mesh with the event listener
-        // other_object is the object `this` collided with
-        console.log("floor");
-        // linear_velocity and angular_velocity are Vector3 objects which represent the velocity of the collision
     });
    
 
@@ -74,31 +68,14 @@ function createMarble() {
     marble.position.x = -5.5;
     marble.position.y = 1;
     marble.position.z = -4.5;
-    // MathUtils.clamp(marble.position.y, 0, 0);
     marble.castShadow=true;
     
 
 
     marble.addEventListener( 'collision', function( other_object, linear_velocity, angular_velocity ) {
-        // `this` is the mesh with the event listener
-        // other_object is the object `this` collided with
         console.log("marble");
-        // linear_velocity and angular_velocity are Vector3 objects which represent the velocity of the collision
     });
 }
-
-// function createWall(x, y, z) {
-//     var wallMaterial = new THREE.MeshPhongMaterial();
-//     wallMaterial.color = new THREE.Color(0x00AAFF);
-//     wallMaterial.wireframe = false;
-//     var wallGeometry = new THREE.BoxGeometry(0.1, 1, 1);
-//     wall = new Physijs.BoxMesh(wallGeometry, marbleMaterial);
-//     //wall = new THREE.Mesh(wallGeometry, wallMaterial);
-//     wall.position.set(x, y, z);
-//     wall.castShadow=true;
-//     return wall;
-// }
-
 
 function createCube(w, h, d, color) {
     var material = new THREE.MeshPhongMaterial();
@@ -111,15 +88,10 @@ function createCube(w, h, d, color) {
     square.name="cubes";    
 
     square.addEventListener( 'collision', function( other_object, linear_velocity, angular_velocity ) {
-        // `this` is the mesh with the event listener
-        // other_object is the object `this` collided with
         console.log("square");
-        // linear_velocity and angular_velocity are Vector3 objects which represent the velocity of the collision
     });
 
     var readyHandler = function() {
-        // object has been added to the scene
-        console.log("added");
     };
     square.addEventListener( 'ready', readyHandler );
     return square;
@@ -170,8 +142,6 @@ function createShapes(){
 
 function addShapes() {
     scene.add(floor);
-    //scene.add(wall);
-    //scene.add(roof);
     scene.add(parent);
     scene.add(marble);
     scene.add(ambientlight);

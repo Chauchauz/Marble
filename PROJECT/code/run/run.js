@@ -1,16 +1,15 @@
 setScene();
-addLight();
 createFloor();
 createMarble();
-groupWalls();
+addLight();
+createCube();
 createShapes();
+
 addShapes();
 document.addEventListener( 'keydown', onKeyDown, false );
 document.addEventListener( 'keyup', onKeyUp, false );
 animate();
 movement();
-collision();
-buildGui();
 rainbowMarble();
-generateMaze();
+buildGui();
 window.addEventListener('resize', resizeScene);

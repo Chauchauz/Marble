@@ -19,16 +19,10 @@ function setScene() {
     var bgTexture = new THREE.TextureLoader().load("code/background.jpg");
     bgTexture.minFilter = THREE.LinearFilter;
     scene.background = bgTexture;
-    // const texture = new THREE.TextureLoader().load("background.jpg");
-    // texture.wrapS = THREE.RepeatWrapping;
-    // texture.wrapT = THREE.RepeatWrapping;
-    // texture.repeat.set( 4, 4 );
 
     scene.addEventListener( 'update', function() {
-        // console.log("Finished setting up");
     });
 
-    // console.log("Bleh");
     
     var ratio = window.innerWidth / window.innerHeight;
     camera = new THREE.PerspectiveCamera(45, ratio, 0.1, 1000);
@@ -39,8 +33,6 @@ function setScene() {
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     document.body.appendChild(renderer.domElement);
-    //controls = new THREE.OrbitControls(camera, renderer.domElement);
-    // controls = new THREE.DragControls(floor, camera, renderer.domElement)(THREE);
 }
 
 //Resize the scene and update the camera aspect to the screen ration
