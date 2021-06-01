@@ -1,4 +1,4 @@
-var floor = null;
+// var floor = null;
 var marble = null;
 
 var ambientlight;
@@ -33,7 +33,11 @@ function createFloor() {
     var floorGeometry = new THREE.BoxGeometry(12, 1, 12);
     // floor = new Physijs.PlaneMesh(floorGeometry, floorMaterial);
     floor = new Physijs.BoxMesh(floorGeometry, floorMaterial, 0);
-    // floor.rotation.x = Math.PI / 2; 
+    // floor.rotation.x = Math.PI / 2;
+    floor.__dirtyPosition = true;
+    floor.__dirtyRotation = true;
+    floor.setLinearVelocity(new THREE.Vector3(0, 0, 0));
+    floor.setAngularVelocity(new THREE.Vector3(0, 0, 0));
     floor.geometry.computeBoundingBox();
     floor.receiveShadow = true;
 }
@@ -46,6 +50,10 @@ function createMarble() {
     var marbleGeometry = new THREE.SphereGeometry(0.5, 20, 20);
     marble = new Physijs.SphereMesh(marbleGeometry, marbleMaterial);
     marble.position.y = 2;
+    // marble.__dirtyPosition = true;
+    // marble.__dirtyRotation = true;
+    // marble.setLinearVelocity(new THREE.Vector3(0, 0, 0));
+    // marble.setAngularVelocity(new THREE.Vector3(0, 0, 0));
     // marble.position.x = 9;
     // marble.castShadow = true;
 
@@ -93,4 +101,3 @@ function addShapes() {
     scene.add(spotlight);
     scene.add(createCube(1, 1, 1, 'skyblue'));
 }
-

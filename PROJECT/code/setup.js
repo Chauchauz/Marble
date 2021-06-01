@@ -3,6 +3,8 @@ var camera;
 var renderer;
 var controls;
 
+var floor = null;
+
 Physijs.scripts.worker = 'js/physijs_worker.js';
 Physijs.scripts.ammo = 'ammo.js';
 
@@ -29,7 +31,8 @@ function setScene() {
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     document.body.appendChild(renderer.domElement);
-    controls = new THREE.OrbitControls(camera, renderer.domElement);
+    // controls = new THREE.OrbitControls(camera, renderer.domElement);
+    // controls = new THREE.DragControls(floor, camera, renderer.domElement)(THREE);
 }
 
 //Resize the scene and update the camera aspect to the screen ration

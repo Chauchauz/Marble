@@ -5,7 +5,7 @@ var tiltBackward = false;
 var tiltRight = false;
 
 //MARBLE MOVEMENT
-var controlMode = "marble"; //Control either the FLOOR or MARBLE
+var controlMode = "floor"; //Control either the FLOOR or MARBLE
 const floorSpeed = 0.01;
 var marbleXVel = 0;
 var marbleZVel = 0;
@@ -35,25 +35,43 @@ var gui;
 function animate() {
     scene.simulate();
     renderer.render(scene, camera);
-    controls.update();
+    requestAnimationFrame(movement);
+    // controls.update();
 
 
     requestAnimationFrame(animate);
 }
 
 function movement() {
+    if (controlMode == "floor") {
+        if (tiltForward) {
+            console.log("tilting forward");
+            // floor.rotation.x -= 0.01;
+            floor.setAngularVelocity(new THREE.Vector3(5, 5, 5));
+            // console.log(floor.rotation.x);
+        } else {
+            // console.log("stopping");
+            floor.setAngularVelocity(new THREE.Vector3(0, 0, 0));
+            
+        }
+        // if (tiltForward && floor.rotation.x > 2 * Math.PI / 5) {
+        //     console.log("tilting forward");
+        //     floor.rotation.x -= floorSpeed;
+        // }
+        if (tiltLeft && floor.rotation.y < Math.PI / 10) {
+            floor.rotation.y += floorSpeed;
+        }
+        if (tiltBackward && floor.rotation.x < 3 * Math.PI / 5) {
+            floor.rotation.x += floorSpeed;
+        }
+        if (tiltRight && floor.rotation.y > -1 * Math.PI / 10) {
+            floor.rotation.y -= floorSpeed;
+        }
+    }
+
     // if (controlMode == "floor") {
-    //     if (tiltForward && floor.rotation.x > 2 * Math.PI / 5) {
-    //         floor.rotation.x -= floorSpeed;
-    //     }
-    //     if (tiltLeft && floor.rotation.y < Math.PI / 10) {
-    //         floor.rotation.y += floorSpeed;
-    //     }
-    //     if (tiltBackward && floor.rotation.x < 3 * Math.PI / 5) {
-    //         floor.rotation.x += floorSpeed;
-    //     }
-    //     if (tiltRight && floor.rotation.y > -1 * Math.PI / 10) {
-    //         floor.rotation.y -= floorSpeed;
+    //     if (tiltForward) {
+    //         floor.rotation.x += 0.1;
     //     }
     // }
     
@@ -90,15 +108,32 @@ function movement() {
     }
 
     //Bounce off walls
-    marbleXVel = ((rightCollision || leftCollision) && Math.abs(marbleXVel) > 0.01) ? -marbleXVel / 2 : marbleXVel;
-    marbleZVel = ((forwardCollision || backCollision) && Math.abs(marbleZVel) > 0.01) ? -marbleZVel / 2 : marbleZVel;
+    // marbleXVel = ((rightCollision || leftCollision) && Math.abs(marbleXVel) > 0.01) ? -marbleXVel / 2 : marbleXVel;
+    // marbleZVel = ((forwardCollision || backCollision) && Math.abs(marbleZVel) > 0.01) ? -marbleZVel / 2 : marbleZVel;
 
-    //Move marble by velocity
-    marble.position.x += ((marbleXVel > 0 && !rightCollision) || (marbleXVel < 0 && !leftCollision)) ? marbleXVel : 0;
-    marble.position.z += ((marbleZVel > 0 && !backCollision) || (marbleZVel < 0 && !forwardCollision)) ? marbleZVel : 0;
+    // //Move marble by velocity
+    // marble.position.x += ((marbleXVel > 0 && !rightCollision) || (marbleXVel < 0 && !leftCollision)) ? marbleXVel : 0;
+    // marble.position.z += ((marbleZVel > 0 && !backCollision) || (marbleZVel < 0 && !forwardCollision)) ? marbleZVel : 0;
 
     requestAnimationFrame(movement);
 }
+
+// function boardTilt() {
+    
+    
+
+//     // add event listener to highlight dragged objects
+
+//     controls.addEventListener( 'dragstart', function ( event ) {
+//         console.log("start drag");
+//     } );
+
+//     controls.addEventListener( 'dragend', function ( event ) {
+//         console.log("end drag");
+//     } );
+
+//     requestAnimationFrame(boardTilt);
+// }
 
 function collision() {
     rightRay.set(marble.position, new THREE.Vector3(1, 0, 0).normalize());
